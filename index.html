@@ -19,31 +19,28 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+      .station-list {
+        width:48%;
+        padding-right:2%;
+        float:left;
+        height:300px;
+      }
+
+      .station-list td {
+        padding:3px 10px 3px 0px;
+      }
+    </style>
 
 </head>
 
 <body ng-app="travelScreenApp">
-    <h3>Brockley Jack</h3>
-    <div ng-controller="tflController" ng-init=init("490004395C") >
-      <table>
-        <tr ng-repeat="arrival in data | orderBy: 'expectedArrival'">
-        <td>{{arrival.lineName}}</td>
-        <td>{{arrival.destinationName}}</td>
-        <td>{{arrival.expectedArrival | date: 'HH:mm:ss'}}</td>
-        </tr>
-      </table>
+    <div ng-controller="stationController">
+    <div class="station-list" ng-repeat="station in list" >
+      <tablewidget stop="station"></tablewidget>
+    </div>
     </div>
 
-    <h3>Honor Oak Park</h3>
-    <div ng-controller="tflController" ng-init=init("910GHONROPK") >
-      <table>
-        <tr ng-repeat="arrival in data | orderBy: 'expectedArrival'">
-        <td>{{arrival.lineName}}</td>
-        <td>{{arrival.destinationName}}</td>
-        <td>{{arrival.expectedArrival | date: 'HH:mm:ss'}}</td>
-        </tr>
-      </table>
-    </div>
 
     <!-- Controllers -->
 
