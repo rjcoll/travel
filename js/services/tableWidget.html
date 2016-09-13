@@ -1,0 +1,10 @@
+
+<h3>{{station.commonName}}<span ng-if="data[0].modeName == 'bus'"> towards {{data[0].towards}}</span></h3>
+  <table>
+  <tr ng-repeat="arrival in data | orderBy: 'expectedArrival' | limitTo: 8">
+      <td ng-if= "arrival.modeName == 'bus'">{{arrival.lineName}}</td>
+      <td>{{arrival.destinationName}}</td>
+      <td>{{arrival.expectedArrival | date: 'HH:mm:ss'}}</td>
+      <td>{{arrival.platformName}}</td>
+  </tr>
+</table>
