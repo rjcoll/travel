@@ -41,6 +41,59 @@ app.controller('stationController', ['$scope','$http', function($scope, $http) {
     });
 }]);
 
+app.controller('timeController', ['$scope','$timeout','$http','Data', function($scope, $timeout, $http, Data) {
+
+
+  (function tick() {
+    Data.getTimes("910GHONROPK").then(function(data){
+      $scope.data = data;
+      console.log(data);
+
+      svg = d3.select("svg");
+      g = svg.append("g");
+      width = svg.attr("width");
+      height = svg.attr("height");
+
+      var parseTime = d3.timeParse("%Y-%m-%dT%H:%M:%S.%LZ");
+
+      var x = d3.scaleTime().range([width - 40, 0])
+
+
+      d3.selectAll(".axis").remove()
+
+      d3.selectAll("g.bus").remove()
+
+      x.domain([
+        Date.now(),
+        d3.max(data, function(d) {return Date.parse(d.expectedArrival)})
+      ])
+
+      g.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(20," + (height - 20)+ ")")
+        .call(d3.axisBottom(x));
+
+      bus = g.selectAll("g.bus")
+        .data(data)
+          .enter()
+        .append("g")
+          .attr("class", "bus");
+
+      bus
+        .append('circle')
+        .attr("r", 4)
+        .attr("cy", height - 20)
+        .attr("cx", function(d) {return x(Date.parse(d.expectedArrival)) + 20})
+        .attr("fill", "black")
+
+
+    })['finally'](function() {
+      $timeout(tick, 1000)
+    });
+  })();
+
+}]);
+
 
 
 
